@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import { Typography, TextField, Container } from '@mui/material'
 
-const FormContainer = styled('div')({
+const FormContainer = styled('form')({
   display: 'flex',
   width: '330px',
   height: '334px',
@@ -32,6 +32,23 @@ const styles = {
 
 export default function LoginPage() {
 
+  const [user, setUser] = useState('')
+  const [pass, setPass] = useState('')
+
+  const handleUser = (e) => {
+    const newUser = e.target.value
+    setUser(newUser)
+  }
+
+  const handlePass = (e) => {
+    const newPass  = e.target.value
+    setPass(newPass)
+  }
+
+  const handleSubmit = (e) => {
+    console.log(user, pass)
+  }
+
   return (
     <Container sx={styles.container}>
       <FormContainer>
@@ -42,14 +59,16 @@ export default function LoginPage() {
           label="Username"
           variant="outlined"
           size="small"
+          onChange={handleUser}
         />
         <LoginTextField
           label="Password"
           variant="outlined"
           size="small"
           type="password"
+          onChange={handlePass}
         />
-        <Button variant="contained" sx={{ mt: 2 }}>
+        <Button variant="contained" sx={{ mt: 2 }} onClick={handleSubmit}>
           Sign In
         </Button>
       </FormContainer>
