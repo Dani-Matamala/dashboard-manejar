@@ -1,8 +1,11 @@
 import React from 'react'
+import CursosData from './CursosData'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <CursosData />
+    </div>
   )
 }
 
