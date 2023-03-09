@@ -1,0 +1,7 @@
+{
+    "editor.linkedEditing": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.autoClosingBrackets": "always",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.guides.bracketPairs": "active"
+}
