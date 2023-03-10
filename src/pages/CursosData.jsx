@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Button, Modal, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled, FormControl } from '@mui/material'
 
 function DataTable() {
-  const [data, setData] = useState([
+  const [ data, setData ] = useState([
     { id: 1, curso: 'Matemáticas', clases: 20, precio: 100, descripcion: 'Curso de matemáticas básicas' },
     { id: 2, curso: 'Inglés', clases: 15, precio: 150, descripcion: 'Curso de inglés para principiantes' },
     { id: 3, curso: 'Programación', clases: 30, precio: 200, descripcion: 'Curso de programación en JavaScript' },
   ])
 
-  const [selectedData, setSelectedData] = useState(null)
-  const [open, setOpen] = useState(false)
-  const [updatedData, setUpdatedData] = useState({ id: '', curso: '', clases: '', precio: '', descripcion: '' })
+  const [ selectedData, setSelectedData ] = useState(null)
+  const [ open, setOpen ] = useState(false)
+  const [ updatedData, setUpdatedData ] = useState({ id: '', curso: '', clases: '', precio: '', descripcion: '' })
 
   const handleOpen = (rowData) => {
     setSelectedData(rowData)
@@ -28,19 +28,34 @@ function DataTable() {
     setOpen(false)
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-
-    setUpdatedData((prevUpdatedData) => ({
-      ...prevUpdatedData,
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+  
+    setUpdatedData({
+      ...updatedData,
       [name]: value,
-    }))
-    console.log(updatedData)
-  }
+    });
+  }, [updatedData]);
+
+  
+
 
   const DataTextField = styled(TextField)({
     marginBottom: '20px',
   })
+
+  const modalBody = (
+    <div style={{ backgroundColor: '#fff', padding: '2rem', width: '320px', height: '350px', margin: '0px auto' }}>
+          <Typography variant='h5' align='center'>Actualizar datos</Typography>
+          <FormControl style={{ display: 'flex', flexDirection: 'column' }}>
+            <DataTextField label="Curso" name="curso" value={updatedData.curso} size="small" variant="outlined" onChange={handleChange} />
+            <DataTextField label="Clases" name="clases" value={updatedData.clases} size="small" variant="outlined" onChange={handleChange} />
+            <DataTextField label="Precio" name="precio" value={updatedData.precio} size="small" variant="outlined" type="number" onChange={handleChange} />
+            <DataTextField label="Descripción" name="descripcion" value={updatedData.descripcion} size="small" variant="outlined" onChange={handleChange} />
+            <Button variant="contained" type="submit" size="small" onClick={handleUpdate} style={{ marginTop: '1rem' }}>Actualizar</Button>
+          </FormControl>
+        </div>
+  )
 
   return (
     <>
@@ -76,16 +91,7 @@ function DataTable() {
       </TableContainer>
 
       <Modal open={open} onClose={handleClose}>
-        <div style={{ backgroundColor: '#fff', padding: '2rem', width: '320px', height: '350px', margin: '0px auto' }}>
-          <Typography variant='h5' align='center'>Actualizar datos</Typography>
-          <FormControl style={{ display: 'flex', flexDirection: 'column' }}>
-            <DataTextField label="Curso" name="curso" defaultValue={updatedData?.curso} size="small" variant="outlined" onChange={handleChange} />
-            <DataTextField label="Clases" name="clases" defaultValue={updatedData?.clases} size="small" variant="outlined" onChange={handleChange} />
-            <DataTextField label="Precio" name="pecio" defaultValue={updatedData?.precio} size="small" variant="outlined" type="number" onChange={handleChange} />
-            <DataTextField label="Descripción" name="descripcion" defaultValue={updatedData?.descripcion} size="small" variant="outlined" onChange={handleChange} />
-            <Button variant="contained" type="submit" size="small" onClick={handleUpdate} style={{ marginTop: '1rem' }}>Actualizar</Button>
-          </FormControl>
-        </div>
+        {modalBody}
       </Modal>
     </>
   )
