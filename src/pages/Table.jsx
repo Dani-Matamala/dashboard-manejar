@@ -9,7 +9,7 @@ function DataTable() {
 
     useEffect(() => {
         axios.get('https://640c841894ce1239b0af1d70.mockapi.io/api/courses')
-            .then(response => {console.log(response); setItems(response.data)})
+            .then(response => { setItems(response.data) })
             .catch(error => console.error(error))
     }, [])
 
@@ -30,6 +30,16 @@ function DataTable() {
             item.id === selectedItem.id ? updatedItem : item
         );
         setItems(updatedItems);
+        fetch(`https://640c841894ce1239b0af1d70.mockapi.io/api/courses/${selectedItem.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updatedItem),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => console.log('UPDATED!', data))
+            .catch(error => console.error(error));
         handleCloseModal();
     };
 
