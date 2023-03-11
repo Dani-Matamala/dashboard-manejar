@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, } from "@mui/material";
-
+import axios from 'axios'
 function DataTable() {
-    const [items, setItems] = useState([
-        { id: 1, curso: "Matemáticas", precio: 100 },
-        { id: 2, curso: "Inglés", precio: 150 },
-        { id: 3, curso: "Programación", precio: 200 },
-    ]);
+    const [items, setItems] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [updatedItem, setUpdatedItem] = useState({ curso: "", precio: "" });
+    const [updatedItem, setUpdatedItem] = useState({ course: "", price: "" });
+
+    useEffect(() => {
+        axios.get('https://640c841894ce1239b0af1d70.mockapi.io/api/courses')
+            .then(response => {console.log(response); setItems(response.data)})
+            .catch(error => console.error(error))
+    }, [])
 
     const handleOpenModal = (item) => {
         setSelectedItem(item);
@@ -19,7 +21,7 @@ function DataTable() {
 
     const handleCloseModal = () => {
         setSelectedItem(null);
-        setUpdatedItem({ curso: "", precio: "" });
+        setUpdatedItem({ course: "", price: "" });
         setOpenModal(false);
     };
 
@@ -45,8 +47,8 @@ function DataTable() {
                     <TableBody>
                         {items.map((item) => (
                             <TableRow key={item.id}>
-                                <TableCell>{item.curso}</TableCell>
-                                <TableCell>{item.precio}</TableCell>
+                                <TableCell>{item.course}</TableCell>
+                                <TableCell>{item.price}</TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={() => handleOpenModal(item)}>
                                         Editar
@@ -63,8 +65,8 @@ function DataTable() {
                     <Typography variant="h5" align="center">
                         Actualizar item
                     </Typography>
-                    <TextField label="Curso" name="curso" value={updatedItem.curso} size="small" variant="outlined" onChange={(e) => setUpdatedItem({ ...updatedItem, curso: e.target.value })} />
-                    <TextField label="Precio" name="precio" value={updatedItem.precio} size="small" variant="outlined" type="number" onChange={(e) => setUpdatedItem({ ...updatedItem, precio: e.target.value })} />
+                    <TextField label="Curso" name="course" value={updatedItem.course} size="small" variant="outlined" onChange={(e) => setUpdatedItem({ ...updatedItem, course: e.target.value })} />
+                    <TextField label="Precio" name="price" value={updatedItem.price} size="small" variant="outlined" type="number" onChange={(e) => setUpdatedItem({ ...updatedItem, price: e.target.value })} />
 
                     <Button variant="contained" onClick={handleUpdateItem} style={{ marginTop: "1rem" }}>
                         Actualizar
