@@ -8,8 +8,8 @@ function DataTable() {
     const [updatedItem, setUpdatedItem] = useState({ course: "", price: "" });
 
     useEffect(() => {
-        axios.get('https://640c841894ce1239b0af1d70.mockapi.io/api/courses')
-            .then(response => { setItems(response.data) })
+        axios.get('http://localhost:3003/prices')
+            .then(response => setItems(response.data))
             .catch(error => console.error(error))
     }, [])
 
@@ -27,10 +27,10 @@ function DataTable() {
 
     const handleUpdateItem = () => {
         const updatedItems = items.map((item) =>
-            item.id === selectedItem.id ? updatedItem : item
+            item.idprice === selectedItem.idprice ? updatedItem : item
         );
         setItems(updatedItems);
-        fetch(`https://640c841894ce1239b0af1d70.mockapi.io/api/courses/${selectedItem.id}`, {
+        fetch(`http://localhost:3003/prices/${selectedItem.idprice}`, {
             method: 'PUT',
             body: JSON.stringify(updatedItem),
             headers: {
@@ -56,7 +56,7 @@ function DataTable() {
                     </TableHead>
                     <TableBody>
                         {items.map((item) => (
-                            <TableRow key={item.id}>
+                            <TableRow key={item.idprice}>
                                 <TableCell>{item.course}</TableCell>
                                 <TableCell>{item.price}</TableCell>
                                 <TableCell>
