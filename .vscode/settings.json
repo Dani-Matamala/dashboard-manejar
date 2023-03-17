@@ -1,7 +1,58 @@
 {
-    "editor.linkedEditing": true,
-    "editor.bracketPairColorization.enabled": true,
-    "editor.autoClosingBrackets": "always",
-    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-    "editor.guides.bracketPairs": "active"
+  "editor.linkedEditing": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.guides.bracketPairs": true,
+  "editor.language.brackets": [
+  ["js", "jsx", "php"]
+  ],
+  "editor.language.colorizedBracketPairs": [
+      "[javascript]": {
+        "editor.language.colorizedBracketPairs": [
+          ["{", "}"],
+          ["[", "]"]
+        ]
+      },
+      "[javascriptreact]": {
+        "editor.language.colorizedBracketPairs": [
+          ["{", "}"],
+          ["[", "]"]
+        ]
+      },
+      "[php]": {
+        "editor.language.colorizedBracketPairs": [
+          ["{", "}"],
+          ["[", "]"]
+        ]
+      }
+  ],
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "punctuation.section.embedded.begin.js",
+        "settings": {
+          "foreground": "#61afef"
+        }
+      },
+      {
+        "scope": "punctuation.section.embedded.end.js",
+        "settings": {
+          "foreground": "#61afef"
+        }
+      },
+      {
+        "scope": "punctuation.section.embedded.begin.jsx",
+        "settings": {
+          "foreground": "#61afef"
+        }
+      },
+      {
+        "scope": "punctuation.section.embedded.end.jsx",
+        "settings": {
+          "foreground": "#61afef"
+        }
+      }
+    ]
+  }
 }

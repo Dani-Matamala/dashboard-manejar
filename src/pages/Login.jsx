@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Typography, TextField, Container, Button, styled } from '@mui/material'
 
+const url=process.env.REACT_APP_URL_LOGIN
+
 const FormContainer = styled('form')({
   display: 'flex',
   width: '330px',
@@ -46,9 +48,26 @@ export default function LoginPage() {
     setPass(newPass)
   }
 
-  const handleLogin = (e) => {
+  async function acces(e) {
     e.preventDefault()
-    if (user === 'daniel' && pass === '12345') {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: user,
+        password: pass
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor');
+    }
+    
+    const data = await response.json();
+    if (data) {
       setIsLoggedIn(true)
       navigate('/dashboard')
     } else {
@@ -56,11 +75,15 @@ export default function LoginPage() {
       setUser('')
       alert("Usuario o contraseña incorrectos")
     }
+    
+  } catch (error) {
+    // Aquí puedes manejar los errores que puedan ocurrir durante la solicitud
+    console.error('Error:', error);
   }
-
+}
   return (
     <Container sx={styles.container}>
-      <FormContainer onSubmit={handleLogin}>
+      <FormContainer onSubmit={acces}>
         <Typography variant='h5' align='center' mb={4}>
           Academia Manejar
         </Typography>
