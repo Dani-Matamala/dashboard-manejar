@@ -47,6 +47,14 @@ function DataTable() {
   };
 
   const handleClose = () => {
+    setUpdatedData({
+    idprices: "",
+    course: "",
+    clases: "",
+    price: "",
+    descripcion: "",
+  });
+  setSelectedData(null)
     setOpen(false);
   };
 
