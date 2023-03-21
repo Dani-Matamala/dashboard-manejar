@@ -39,7 +39,6 @@ const styles = {
 export default function LoginPage( { handlePermission } ) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate()
 
   const handleUser = (e) => {
@@ -72,7 +71,6 @@ export default function LoginPage( { handlePermission } ) {
 
       const data = await response.json();
       if (data) {
-        setIsLoggedIn(true);
         handlePermission(true)
         navigate('/dashboard')
       } else {
