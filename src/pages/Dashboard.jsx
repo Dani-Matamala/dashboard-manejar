@@ -1,5 +1,5 @@
 import React from 'react'
-import CursosData from './CursosData'
+import CursosData from '../components/CursosData'
 
 const Dashboard = () => {
   return (
